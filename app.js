@@ -17,11 +17,6 @@ app.use(express.json());
 // Path to the db.json file
 const dbPath = path.join(__dirname, 'db.json');
 
-// Create db.json with an empty array if it doesn't exist
-if (!fs.existsSync(dbPath)) {
-  fs.writeFileSync(dbPath, '[]', 'utf8');
-}
-
 // Route to return the notes.html file
 app.get('/notes', (req, res) => {
   const notesFilePath = path.join(__dirname, 'public', 'notes.html');
