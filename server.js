@@ -1,35 +1,47 @@
-const fs = require('fs');
+// Imported modules
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
+const generateUniqueId = require('generate-unique-id');
+
+// Express app setup
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const { notes } = require("./db/db.json");
-
-app.use(express.urlencoded({ extended: true}));
+// Middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-const generateUniqueId = require('generate-unique-id');
+// Sample data
+const { notes } = require('./db/db.json');
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './index.html'));
+// Routes
+app.get('/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, './index.html'));
 });
 
-app.get('/notes', (req, res) => {
+app.get('/notes.html', (req, res) => {
     res.sendFile(path.join(__dirname, './notes.html'));
-});
-
-app.get('/api/notes', (req, res) => {
-    res.json(notes);
 });
 
 app.post('/api/notes', (req, res) => {
     req.body.id = generateUniqueId();
-    const note = createNewNote(req.body, notes);
-    res.json(note);
+    const newNote = createNewNote(req.body, notes);
+    res.json(newNote);
+  });
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server listening on PORT ${PORT}`);
 });
 
-app.listen(PORT, () => {
-    console.log(`App listening on PORT ${PORT}`);
-});
+// Helper function to create a new note
+function createNewNote(body, notesArray) {
+  const newNote = body;
+  notesArray.push(newNote);
+  fs.writeFileSync(
+    path.join(__dirname, './db/db.json'),
+    JSON.stringify({ notes: notesArray }, null, 2)
+  );
+  return newNote;
+}
