@@ -21,3 +21,13 @@ THEN that note appears in the right-hand column
 WHEN I click on the Write icon in the navigation at the top of the page
 THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
 ```
+
+## Description
+This is a note taking website. You can create and save multiple notes at once for the convinence of the user. 
+
+## Usage
+To use this website you simply start with clicking the get started button. This will take you to the note section of the website. Next you enter the title of your note, preferabliy something unqiue. Under the tile enter the information or note that you want to save. Finally, click the button in the top right of the screen to save the notes on the right column of the website.
+
+## Authors
+- Wes Simcox
+- miniature-Eureka(starter Code)
